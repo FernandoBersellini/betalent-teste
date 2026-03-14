@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.integer('client_id').unsigned().references('id').inTable('clients').notNullable()
       table.integer('gateway_id').unsigned().references('id').inTable('gateways').notNullable()
-      table.integer('external_id').notNullable()
+      table.string('external_id', 255).notNullable()
       table.enum('status', ['pending', 'paid', 'refunded', 'failed']).notNullable()
       table.integer('amount').notNullable()
       table.string('card_last_numbers').notNullable()

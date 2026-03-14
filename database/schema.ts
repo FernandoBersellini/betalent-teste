@@ -66,7 +66,7 @@ export class TransactionSchema extends BaseModel {
   @column()
   declare clientId: number
   @column()
-  declare externalId: number
+  declare externalId: string
   @column()
   declare gatewayId: number
   @column({ isPrimary: true })
