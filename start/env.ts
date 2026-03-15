@@ -35,5 +35,11 @@ export default await Env.create(new URL('../', import.meta.url), {
   //Gateway
   GATEWAY1_URL: Env.schema.string({ format: 'url', tld: false }),
   GATEWAY2_URL: Env.schema.string({ format: 'url', tld: false }),
+
+  //Gateway authentication
+  GATEWAY1_LOGIN: Env.schema.string(),
+  GATEWAY1_TOKEN: Env.schema.string(),
+  GATEWAY2_AUTH_TOKEN: Env.schema.string(),
+  GATEWAY2_AUTH_SECRET: Env.schema.string(),
 })
  

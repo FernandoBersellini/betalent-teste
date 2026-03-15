@@ -19,7 +19,11 @@ export class Gateway2Driver implements GatewayDriverContract {
   ): Promise<GatewayTransactionResult> {
     const response = await fetch(`${this.baseUrl}/transacoes`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Gateway-Auth-Token': env.get('GATEWAY2_AUTH_TOKEN'),
+        'Gateway-Auth-Secret': env.get('GATEWAY2_AUTH_SECRET')
+      },
       body: JSON.stringify({
         valor: payload.amount,
         nome: payload.name,

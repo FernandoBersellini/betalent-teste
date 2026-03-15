@@ -10,7 +10,23 @@ export class Gateway1Driver implements GatewayDriverContract {
   private baseUrl: string = env.get('GATEWAY1_URL')
 
   async authenticate(): Promise<string> {
-    return ''
+    const response = await fetch(`${this.baseUrl}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: env.get('GATEWAY1_LOGIN'),
+        token: env.get('GATEWAY1_TOKEN'),
+      }),
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      throw new Error(`Gateway 1 - authenticate falhou: ${error}`)
+    }
+
+    const data = (await response.json()) as { token: string }
+
+    return data.token
   }
 
   async createTransaction(
@@ -19,7 +35,10 @@ export class Gateway1Driver implements GatewayDriverContract {
   ): Promise<GatewayTransactionResult> {
     const response = await fetch(`${this.baseUrl}/transactions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${await this.authenticate()}` 
+      },
       body: JSON.stringify({
         clientId: payload.clientId,
         amount: payload.amount,
@@ -57,7 +76,10 @@ export class Gateway1Driver implements GatewayDriverContract {
       `${this.baseUrl}/transactions/${transactionId}/charge_back`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${await this.authenticate()}` 
+        },
       }
     )
 
