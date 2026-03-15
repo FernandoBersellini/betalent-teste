@@ -3,7 +3,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Product from "#models/product"
 import { createProductValidator } from '#validators/product'
 import { updateProductValidator } from '#validators/product'
-import { serialize } from 'v8'
 
 export default class ProductsController {
     async index() {

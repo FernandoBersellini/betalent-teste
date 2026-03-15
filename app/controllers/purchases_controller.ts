@@ -2,7 +2,6 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { purchaseValidator } from '#validators/purchase'
 import Client from '#models/client'
 import { GatewayManager } from '#services/gateway_manager'
-import { randomUUID } from 'crypto'
 import Transaction from '#models/transaction'
 import db from '@adonisjs/lucid/services/db'
 
@@ -23,13 +22,12 @@ export default class PurchasesController {
         const transaction = await db.transaction(async (trx) => {
             const client = await Client.firstOrCreate(
                 { email: data.email },
-                { id: randomUUID(), name: data.name },
+                { name: data.name },
                 { client: trx }
             )
 
             const tx = await Transaction.create(
                 {
-                    id: randomUUID(),
                     externalId: result.externalId,
                     gatewayId: gatewayId,
                     clientId: client.id,
