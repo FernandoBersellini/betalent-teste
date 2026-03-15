@@ -1,10 +1,11 @@
 export interface GatewayDriverContract {
     authenticate(): Promise<string>
-    createTransaction(payload: GatewayTransactionPayload): Promise<GatewayTransactionResult>
+    createTransaction(payload: GatewayTransactionPayload, gatewayId: string): Promise<GatewayTransactionResult>
     refund(transactionId: string): Promise<GatewayRefundResult>
 }
 
 export type GatewayTransactionPayload = {
+    clientId: string
     amount: number
     name: string
     email: string
@@ -13,14 +14,15 @@ export type GatewayTransactionPayload = {
 }
 
 export type GatewayTransactionResult = {
-    sucess: boolean
+    success: boolean
     message: string
-    transactionId: string
+    externalId: string
     transactionStatus: string
+    cardLastNumbers: string
 }
 
 export type GatewayRefundResult = {
-    sucess: boolean
+    success: boolean
     message: string
     transactionId: string
     refundStatus: string

@@ -14,7 +14,8 @@ export class Gateway2Driver implements GatewayDriverContract {
   }
 
   async createTransaction(
-    payload: GatewayTransactionPayload
+    payload: GatewayTransactionPayload,
+    _gatewayId: string
   ): Promise<GatewayTransactionResult> {
     const response = await fetch(`${this.baseUrl}/transacoes`, {
       method: 'POST',
@@ -33,13 +34,18 @@ export class Gateway2Driver implements GatewayDriverContract {
       throw new Error(`Gateway 2 - createTransaction falhou: ${error}`)
     }
 
-    const data = (await response.json()) as { id: string | number; status: string }
+    const data = (await response.json()) as {
+      id: string | number
+      status: string
+      numero_cartao: string
+    }
 
     return {
-      sucess: true,
+      success: true,
       message: 'Transação criada com sucesso',
-      transactionId: String(data.id),
+      externalId: String(data.id),
       transactionStatus: data.status,
+      cardLastNumbers: (data.numero_cartao ?? payload.cardNumber).slice(-4),
     }
   }
 
@@ -58,7 +64,7 @@ export class Gateway2Driver implements GatewayDriverContract {
     const data = (await response.json()) as { id?: string | number; status?: string }
 
     return {
-      sucess: true,
+      success: true,
       message: 'Reembolso processado com sucesso',
       transactionId: String(data.id ?? transactionId),
       refundStatus: data.status ?? 'refunded',

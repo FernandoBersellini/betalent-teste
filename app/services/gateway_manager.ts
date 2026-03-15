@@ -2,6 +2,7 @@ import Gateway from '#models/gateway'
 import logger from '@adonisjs/core/services/logger'
 import { Gateway1Driver } from './gateway1_driver.ts'
 import { Gateway2Driver } from './gateway2_driver.ts'
+import { AllGatewaysFailedException } from '#exceptions/all_gateways_failed_exception'
 import type {
   GatewayDriverContract,
   GatewayTransactionPayload,
@@ -27,7 +28,7 @@ export class GatewayManager {
 
   async processPayment(
     payload: GatewayTransactionPayload
-  ): Promise<{ result: GatewayTransactionResult; gatewayId: number }> {
+  ): Promise<{ result: GatewayTransactionResult; gatewayId: string }> {
     const gateways = await Gateway.query()
       .where('is_active', true)
       .orderBy('priority', 'asc')
@@ -44,11 +45,11 @@ export class GatewayManager {
         const driver = this.createDriver(gateway.name!)
 
         const result = await withTimeout(
-          driver.createTransaction(payload),
+          driver.createTransaction(payload, gateway.id),
           GATEWAY_TIMEOUT_MS
         )
 
-        if (result.sucess) {
+        if (result.success) {
           logger.info(`Pagamento processado com sucesso via ${gateway.name}`)
           return { result, gatewayId: gateway.id }
         }
@@ -82,21 +83,12 @@ export class GatewayManager {
       GATEWAY_TIMEOUT_MS
     )
 
-    if (!result.sucess) {
+    if (!result.success) {
       throw new Error(`Reembolso falhou via ${gateway.name}: ${result.message}`)
     }
 
     logger.info(`Reembolso processado com sucesso via ${gateway.name}`)
     return result
-  }
-}
-
-export class AllGatewaysFailedException extends Error {
-  status = 502
-
-  constructor(message: string) {
-    super(message)
-    this.name = 'AllGatewaysFailedException'
   }
 }
 

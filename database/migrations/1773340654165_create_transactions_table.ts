@@ -5,10 +5,10 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.integer('client_id').unsigned().references('id').inTable('clients').notNullable()
-      table.integer('gateway_id').unsigned().references('id').inTable('gateways').notNullable()
-      table.string('external_id', 255).notNullable()
+      table.uuid('id').primary()
+      table.uuid('client_id').references('id').inTable('clients').notNullable()
+      table.uuid('gateway_id').references('id').inTable('gateways').notNullable()
+      table.uuid('external_id').notNullable()
       table.enum('status', ['pending', 'paid', 'refunded', 'failed']).notNullable()
       table.integer('amount').notNullable()
       table.string('card_last_numbers').notNullable()

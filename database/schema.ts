@@ -12,7 +12,7 @@ export class ClientSchema extends BaseModel {
   @column()
   declare email: string | null
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
   @column()
   declare name: string | null
 }
@@ -21,7 +21,7 @@ export class GatewaySchema extends BaseModel {
   static $columns = ['id', 'isActive', 'name', 'priority'] as const
   $columns = GatewaySchema.$columns
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
   @column()
   declare isActive: boolean | null
   @column()
@@ -36,7 +36,7 @@ export class ProductSchema extends BaseModel {
   @column()
   declare amount: number | null
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
   @column()
   declare name: string | null
 }
@@ -45,15 +45,15 @@ export class TransactionProductSchema extends BaseModel {
   static $columns = ['id', 'price', 'productId', 'quantity', 'transactionId'] as const
   $columns = TransactionProductSchema.$columns
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
   @column()
   declare price: number
   @column()
-  declare productId: number
+  declare productId: string
   @column()
   declare quantity: number
   @column()
-  declare transactionId: number
+  declare transactionId: string
 }
 
 export class TransactionSchema extends BaseModel {
@@ -64,13 +64,13 @@ export class TransactionSchema extends BaseModel {
   @column()
   declare cardLastNumbers: string
   @column()
-  declare clientId: number
+  declare clientId: string
   @column()
   declare externalId: string
   @column()
-  declare gatewayId: number
+  declare gatewayId: string
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
   @column()
   declare status: string
 }
@@ -81,7 +81,7 @@ export class UserSchema extends BaseModel {
   @column()
   declare email: string
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
   @column({ serializeAs: null })
   declare password: string
   @column()
