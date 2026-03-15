@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid('id').primary()
+      table.uuid('id').primary().defaultTo(crypto.randomUUID())
       table.string('name')
       table.integer('amount')
     })

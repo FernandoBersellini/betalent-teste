@@ -10,4 +10,11 @@ export interface ApiDefinition {
     updatePriority: typeof routes['gateways.update_priority']
     toggleActive: typeof routes['gateways.toggle_active']
   }
+  products: {
+    index: typeof routes['products.index']
+    show: typeof routes['products.show']
+    store: typeof routes['products.store']
+    update: typeof routes['products.update']
+    destroy: typeof routes['products.destroy']
+  }
 }
