@@ -44,7 +44,7 @@ export class GatewayManager {
         logger.info(`Tentando processar pagamento via ${gateway.name}`)
         const driver = this.createDriver(gateway.name!)
 
-        const result = await withTimeout(
+        const result = await withTimeout(                               
           driver.createTransaction(payload, gateway.id),
           GATEWAY_TIMEOUT_MS
         )
@@ -71,7 +71,7 @@ export class GatewayManager {
 
   async processRefund(
     externalId: string,
-    gatewayId: number
+    gatewayId: string
   ): Promise<GatewayRefundResult> {
     const gateway = await Gateway.findOrFail(gatewayId)
     const driver = this.createDriver(gateway.name!)

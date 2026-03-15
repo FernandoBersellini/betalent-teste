@@ -31,3 +31,10 @@ router.get('/api/v1/users/:id', [controllers.Users, 'show'])
 router.post('/api/v1/users', [controllers.Users, 'store'])
 router.patch('/api/v1/users/:id', [controllers.Users, 'update'])
 router.delete('/api/v1/users/:id', [controllers.Users, 'destroy'])
+
+router.get('/api/v1/clients', [controllers.Clients, 'index'])
+router.get('/api/v1/clients/:id', [controllers.Clients, 'show'])
+
+router.get('/api/v1/transactions', [controllers.Transactions, 'index'])
+router.get('/api/v1/transactions/:id', [controllers.Transactions, 'show'])
+router.post('/api/v1/transactions/:id/refund', [controllers.Transactions, 'refund'])

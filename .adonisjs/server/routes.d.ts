@@ -18,6 +18,11 @@ export type ScannedRoutes = {
     'users.store': { paramsTuple?: []; params?: {} }
     'users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'clients.index': { paramsTuple?: []; params?: {} }
+    'clients.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'transactions.index': { paramsTuple?: []; params?: {} }
+    'transactions.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'transactions.refund': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   GET: {
     'gateways.index': { paramsTuple?: []; params?: {} }
@@ -25,6 +30,10 @@ export type ScannedRoutes = {
     'products.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'clients.index': { paramsTuple?: []; params?: {} }
+    'clients.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'transactions.index': { paramsTuple?: []; params?: {} }
+    'transactions.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   HEAD: {
     'gateways.index': { paramsTuple?: []; params?: {} }
@@ -32,11 +41,16 @@ export type ScannedRoutes = {
     'products.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.index': { paramsTuple?: []; params?: {} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'clients.index': { paramsTuple?: []; params?: {} }
+    'clients.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'transactions.index': { paramsTuple?: []; params?: {} }
+    'transactions.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   POST: {
     'purchases.store': { paramsTuple?: []; params?: {} }
     'products.store': { paramsTuple?: []; params?: {} }
     'users.store': { paramsTuple?: []; params?: {} }
+    'transactions.refund': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   PATCH: {
     'gateways.update_priority': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

@@ -48,7 +48,7 @@ export class Gateway1Driver implements GatewayDriverContract {
       message: 'Transação criada com sucesso',
       externalId: String(data.id),
       transactionStatus: data.status,
-      cardLastNumbers: data.card_last_numbers.slice(-4),
+      cardLastNumbers: (data.card_last_numbers ?? payload.cardNumber).slice(-4),
     }
   }
 
