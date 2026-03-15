@@ -24,8 +24,8 @@ export default class ProductsController {
     async update({ params, request }: HttpContext) {
         const { name, amount } = await updateProductValidator.validate(request.all())
         const product = await Product.findOrFail(params.id)
-        product.name = name
-        product.amount = amount
+        product.name = name ?? product.name
+        product.amount = amount ?? product.amount
         await product.save()
         return product    
     }

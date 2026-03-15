@@ -9,32 +9,52 @@
 
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
+import { middleware } from './kernel.ts'
 
-router.get('/', () => {
-  return { hello: 'world' }
+router.group(() => {
+    router.group(() => {
+        router.get('/', [controllers.Gateways, 'index'])
+        router.patch('/:id/priority', [controllers.Gateways, 'updatePriority'])
+        router.patch('/:id/toggle', [controllers.Gateways, 'toggleActive'])
+    })
+    .prefix('gateways')
+
+    router.group(() => {
+        router.get('/', [controllers.Products, 'index']).use(middleware.role({ roles: ['admin', 'manager', 'finance','user'] }))
+        router.get('/:id', [controllers.Products, 'show']).use(middleware.role({ roles: ['admin', 'manager', 'finance','user'] }))
+        router.post('/', [controllers.Products, 'store']).use(middleware.role({ roles: ['admin', 'manager', 'finance'] }))
+        router.patch('/:id', [controllers.Products, 'update']).use(middleware.role({ roles: ['admin', 'manager', 'finance'] }))
+        router.delete('/:id', [controllers.Products, 'destroy']).use(middleware.role({ roles: ['admin', 'manager', 'finance'] }))
+    })
+    .prefix('products')
+
+    router.group(() => {
+        router.get('/', [controllers.Users, 'index'])
+        router.get('/:id', [controllers.Users, 'show'])
+        router.post('/', [controllers.Users, 'store'])
+        router.patch('/:id', [controllers.Users, 'update'])
+        router.delete('/:id', [controllers.Users, 'destroy'])
+    })
+    .prefix('users')
+
+    router.group(() => {
+        router.get('/', [controllers.Clients, 'index'])
+        router.get('/:id', [controllers.Clients, 'show'])
+    })
+    .prefix('clients')
+
+    router.group(() => {
+        router.get('/', [controllers.Transactions, 'index'])
+        router.get('/:id', [controllers.Transactions, 'show'])
+        router.post('/:id/refund', [controllers.Transactions, 'refund'])
+    })
+    .prefix('transactions')
+
+    router.group(() => {
+        router.post('/', [controllers.Purchases, 'store'])
+    })
+    .prefix('purchases')
 })
+.prefix('api/v1')
 
-router.post('/api/v1/purchases', [controllers.Purchases, 'store'])
 
-router.get('/api/v1/gateways', [controllers.Gateways, 'index'])
-router.patch('/api/v1/gateways/:id/priority', [controllers.Gateways, 'updatePriority'])
-router.patch('/api/v1/gateways/:id/toggle', [controllers.Gateways, 'toggleActive'])
-
-router.get('/api/v1/products', [controllers.Products, 'index'])
-router.get('/api/v1/products/:id', [controllers.Products, 'show'])
-router.post('/api/v1/products', [controllers.Products, 'store'])
-router.patch('/api/v1/products/:id', [controllers.Products, 'update'])
-router.delete('/api/v1/products/:id', [controllers.Products, 'destroy'])
-
-router.get('/api/v1/users', [controllers.Users, 'index'])
-router.get('/api/v1/users/:id', [controllers.Users, 'show'])
-router.post('/api/v1/users', [controllers.Users, 'store'])
-router.patch('/api/v1/users/:id', [controllers.Users, 'update'])
-router.delete('/api/v1/users/:id', [controllers.Users, 'destroy'])
-
-router.get('/api/v1/clients', [controllers.Clients, 'index'])
-router.get('/api/v1/clients/:id', [controllers.Clients, 'show'])
-
-router.get('/api/v1/transactions', [controllers.Transactions, 'index'])
-router.get('/api/v1/transactions/:id', [controllers.Transactions, 'show'])
-router.post('/api/v1/transactions/:id/refund', [controllers.Transactions, 'refund'])

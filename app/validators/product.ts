@@ -6,6 +6,6 @@ export const createProductValidator = vine.create({
 })
 
 export const updateProductValidator = vine.create({
-    name: vine.string(),
-    amount: vine.number(),
+    name: vine.string().optional(),
+    amount: vine.number().optional(),
 })

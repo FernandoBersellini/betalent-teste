@@ -15,9 +15,18 @@ export default class PurchasesController {
             { name: data.name },
         )
 
-        const product = await Product.findOrFail(data.productId)
+        let totalAmount = 0
+        const itemsWithPrice: { productId: string; quantity: number; price: number }[] = []
 
-        const totalAmount = (product.amount || 1) * data.quantity
+        for (const item of data.items) {
+            const product = await Product.findOrFail(item.productId)
+            const price = product.amount ?? 1
+            totalAmount += price * item.quantity
+            itemsWithPrice.push({
+                ...item,
+                price
+            })
+        }
 
         const gatewayManager = new GatewayManager()
         const { result, gatewayId } = await gatewayManager.processPayment({
@@ -42,13 +51,13 @@ export default class PurchasesController {
                 { client: trx }
             )
 
-            await TransactionProduct.create(
-                {
+            await TransactionProduct.createMany(
+                itemsWithPrice.map((item) => ({
                     transactionId: tx.id,
-                    productId: product.id,
-                    quantity: data.quantity,
-                    price: product.amount || 0,
-                },
+                    productId: item.productId,
+                    quantity: item.quantity,
+                    price: item.price,
+                })),
                 { client: trx }
             )
 

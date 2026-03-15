@@ -7,18 +7,6 @@ import type { InferInput, SimpleError } from '@vinejs/vine/types'
 export type ParamValue = string | number | bigint | boolean
 
 export interface Registry {
-  'purchases.store': {
-    methods: ["POST"]
-    pattern: '/api/v1/purchases'
-    types: {
-      body: ExtractBody<InferInput<(typeof import('#validators/purchase').purchaseValidator)>>
-      paramsTuple: []
-      params: {}
-      query: ExtractQuery<InferInput<(typeof import('#validators/purchase').purchaseValidator)>>
-      response: ExtractResponse<Awaited<ReturnType<import('#controllers/purchases_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/purchases_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
-    }
-  }
   'gateways.index': {
     methods: ["GET","HEAD"]
     pattern: '/api/v1/gateways'
@@ -233,6 +221,18 @@ export interface Registry {
       query: {}
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['refund']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['refund']>>>
+    }
+  }
+  'purchases.store': {
+    methods: ["POST"]
+    pattern: '/api/v1/purchases'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/purchase').purchaseValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/purchase').purchaseValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/purchases_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/purchases_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
 }

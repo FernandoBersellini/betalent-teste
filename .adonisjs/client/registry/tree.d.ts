@@ -2,9 +2,6 @@
 import type { routes } from './index.ts'
 
 export interface ApiDefinition {
-  purchases: {
-    store: typeof routes['purchases.store']
-  }
   gateways: {
     index: typeof routes['gateways.index']
     updatePriority: typeof routes['gateways.update_priority']
@@ -32,5 +29,8 @@ export interface ApiDefinition {
     index: typeof routes['transactions.index']
     show: typeof routes['transactions.show']
     refund: typeof routes['transactions.refund']
+  }
+  purchases: {
+    store: typeof routes['purchases.store']
   }
 }

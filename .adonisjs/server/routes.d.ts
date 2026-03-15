@@ -4,7 +4,6 @@ type ParamValue = string | number | bigint | boolean
 
 export type ScannedRoutes = {
   ALL: {
-    'purchases.store': { paramsTuple?: []; params?: {} }
     'gateways.index': { paramsTuple?: []; params?: {} }
     'gateways.update_priority': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'gateways.toggle_active': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
@@ -23,6 +22,7 @@ export type ScannedRoutes = {
     'transactions.index': { paramsTuple?: []; params?: {} }
     'transactions.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'transactions.refund': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'purchases.store': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'gateways.index': { paramsTuple?: []; params?: {} }
@@ -46,17 +46,17 @@ export type ScannedRoutes = {
     'transactions.index': { paramsTuple?: []; params?: {} }
     'transactions.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
-  POST: {
-    'purchases.store': { paramsTuple?: []; params?: {} }
-    'products.store': { paramsTuple?: []; params?: {} }
-    'users.store': { paramsTuple?: []; params?: {} }
-    'transactions.refund': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-  }
   PATCH: {
     'gateways.update_priority': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'gateways.toggle_active': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'products.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
+  POST: {
+    'products.store': { paramsTuple?: []; params?: {} }
+    'users.store': { paramsTuple?: []; params?: {} }
+    'transactions.refund': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'purchases.store': { paramsTuple?: []; params?: {} }
   }
   DELETE: {
     'products.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
