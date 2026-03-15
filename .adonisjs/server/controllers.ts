@@ -5,4 +5,5 @@
 
 export const controllers = {
   Purchases: () => import('#controllers/purchases_controller'),
+  Gateways: () => import('#controllers/gateways_controller'),
 }
