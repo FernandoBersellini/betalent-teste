@@ -9,7 +9,6 @@
 
 import router from '@adonisjs/core/services/router'
 import { controllers } from '#generated/controllers'
-import { middleware } from './kernel.ts'
 
 router.group(() => {
     router.group(() => {
@@ -20,11 +19,11 @@ router.group(() => {
     .prefix('gateways')
 
     router.group(() => {
-        router.get('/', [controllers.Products, 'index']).use(middleware.role({ roles: ['admin', 'manager', 'finance','user'] }))
-        router.get('/:id', [controllers.Products, 'show']).use(middleware.role({ roles: ['admin', 'manager', 'finance','user'] }))
-        router.post('/', [controllers.Products, 'store']).use(middleware.role({ roles: ['admin', 'manager', 'finance'] }))
-        router.patch('/:id', [controllers.Products, 'update']).use(middleware.role({ roles: ['admin', 'manager', 'finance'] }))
-        router.delete('/:id', [controllers.Products, 'destroy']).use(middleware.role({ roles: ['admin', 'manager', 'finance'] }))
+        router.get('/', [controllers.Products, 'index'])
+        router.get('/:id', [controllers.Products, 'show'])
+        router.post('/', [controllers.Products, 'store'])
+        router.patch('/:id', [controllers.Products, 'update'])
+        router.delete('/:id', [controllers.Products, 'destroy'])
     })
     .prefix('products')
 

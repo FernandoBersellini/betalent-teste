@@ -16,7 +16,7 @@ export default class TransactionsController {
     }
 
     async show({ params }: HttpContext) {
-        const transaction = await Transaction.query().where('id', params.id).preload('client').preload('gateway').firstOrFail()
+        const transaction = await Transaction.query().where('id', params.id).preload('client').preload('gateway').preload('products').firstOrFail()
         return transaction
     }
 

@@ -22,6 +22,8 @@ export default class Transaction extends TransactionSchema {
     @belongsTo(() => Gateway)
     declare gateway: BelongsTo<typeof Gateway>
 
-    @manyToMany(() => Product)
+    @manyToMany(() => Product, {
+        pivotTable: 'transaction_products'
+    })
     declare products: ManyToMany<typeof Product>
 }
