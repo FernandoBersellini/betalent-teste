@@ -2,6 +2,7 @@ import Gateway from '#models/gateway'
 import User from '#models/user'
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import { randomUUID } from 'crypto'
+import hash from '@adonisjs/core/services/hash'
 
 export default class extends BaseSeeder {
   async run() {
@@ -9,7 +10,7 @@ export default class extends BaseSeeder {
     await User.create({
       id: randomUUID(),
       email: 'admin@email.com',
-      password: 'Admin_dev123',
+      password: await hash.make('Admin_dev123'),
       role: 'admin',
     }),
     await Gateway.create({

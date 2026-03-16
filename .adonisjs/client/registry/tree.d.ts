@@ -2,6 +2,10 @@
 import type { routes } from './index.ts'
 
 export interface ApiDefinition {
+  auth: {
+    login: typeof routes['auth.login']
+    logout: typeof routes['auth.logout']
+  }
   gateways: {
     index: typeof routes['gateways.index']
     updatePriority: typeof routes['gateways.update_priority']
